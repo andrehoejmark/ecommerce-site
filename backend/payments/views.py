@@ -1,29 +1,76 @@
 from .models import *
-from django.http import JsonResponse
+from rest_framework import status
+from rest_framework.response import Response
+from django.shortcuts import redirect
 from django.conf import settings
-from django.views import View
+from rest_framework.views import APIView
+from .serializer import CheckoutSerializer
 import stripe
+from store.models import *
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class CreateCheckoutSession(View):
+
+class StripeCheckoutView(APIView):
 
     def post(self, request, *args, **kwargs):
-        YOUR_DOMAIN = "http://127.0.0.1:8000"
+        try:
+            
+            YOUR_DOMAIN = "http://127.0.0.1:3000"
 
-        checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    'price': '{{PRICE_ID}}',
-                    'quantity': 1,
-                },
-            ],
-            mode='payment',
-            success_url=YOUR_DOMAIN + '?success=true',
-            cancel_url=YOUR_DOMAIN + '?canceled=true',
-        )
+            serializer = CheckoutSerializer(
+                data=request.POST
+            )
 
-        return JsonResponse({
-            'id': checkout_session.id
-        })
+            print(request)
+
+            if serializer.is_valid():
+
+                data = serializer.validated_data
+
+
+                print("data:")
+                productIDS = data['productIDS']
+
+
+                line_items = []
+                for productID in productIDS:
+
+                    product = Product.objects.get(pk=productID)
+
+                    productName = product.title
+                    productImage = product.image
+                    productPrice = int(str(int(product.price)) + "00")
+
+                    line_item = {
+                            "price_data": {
+                                "unit_amount": productPrice,
+                                "currency": 'sek',
+                                "product_data": {
+                                    "name": productName,
+                                    "images": [str(productImage)]
+                                },
+                            },
+                            'quantity': 1,
+                    }
+                    
+                    line_items.append(line_item)
+
+                checkout_session = stripe.checkout.Session.create(
+                    line_items=line_items,
+                    mode='payment',
+                    success_url=YOUR_DOMAIN + '?success=true&session_id={CHECKOUT_SESSION_ID}',
+                    cancel_url=YOUR_DOMAIN + '?canceled=true',
+                )
+
+                #return Response({"message":str("hello world")}, status = status.HTTP_200_OK)
+                return redirect(checkout_session.url)
+
+            else:
+                return Response({"errors":str(serializer.errors)}, status = status.HTTP_200_OK)
+
+        except Exception as e:
+            print("Exception:" + str(e))
+            return Response({"errors":str(e)}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)

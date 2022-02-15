@@ -37,8 +37,10 @@ else:
     STRIPE_SECRET_KEY = 'production_secret_key'
 
 
+ALLOWED_HOSTS = ["*"]
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['localhost:3000']
+CSRF_TRUSTED_ORIGINS = ['localhost:3000']
 
 
 # Application definition
@@ -50,12 +52,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'storages',
 
     'store',
     'payments',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,7 +69,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -98,6 +105,9 @@ DATABASES = {
     }
 }
 
+#CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
+#CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

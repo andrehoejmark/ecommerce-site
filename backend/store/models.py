@@ -11,12 +11,13 @@ class Customer(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
+    desc = models.TextField(blank=True, null=True, default=None)
     price = models.FloatField()
-    images = models.ImageField(blank=True, null=True, default=None)
+    image = models.ImageField(blank=True, null=True, default=None)
 
     def __str__(self):
-        return self.name
+        return self.title
 
 class Order(models.Model):
     transaction_id = models.CharField(primary_key=True, max_length=200)
