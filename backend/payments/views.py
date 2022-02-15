@@ -6,6 +6,8 @@ from django.conf import settings
 from rest_framework.views import APIView
 from .serializer import CheckoutSerializer
 import stripe
+from store.models import *
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -22,26 +24,42 @@ class StripeCheckoutView(APIView):
                 data=request.POST
             )
 
-            print(request.data)
+            print(request)
 
             if serializer.is_valid():
 
                 data = serializer.validated_data
 
 
-                checkout_session = stripe.checkout.Session.create(
-                    line_items=[
-                        {
+                print("data:")
+                productIDS = data['productIDS']
+
+
+                line_items = []
+                for productID in productIDS:
+
+                    product = Product.objects.get(pk=productID)
+
+                    productName = product.title
+                    productImage = product.image
+                    productPrice = int(str(int(product.price)) + "00")
+
+                    line_item = {
                             "price_data": {
-                                "unit_amount": 4000,
-                                "currency": 'usd',
+                                "unit_amount": productPrice,
+                                "currency": 'sek',
                                 "product_data": {
-                                    "name": "Test Product"
+                                    "name": productName,
+                                    "images": [str(productImage)]
                                 },
                             },
                             'quantity': 1,
-                        }
-                    ],
+                    }
+                    
+                    line_items.append(line_item)
+
+                checkout_session = stripe.checkout.Session.create(
+                    line_items=line_items,
                     mode='payment',
                     success_url=YOUR_DOMAIN + '?success=true&session_id={CHECKOUT_SESSION_ID}',
                     cancel_url=YOUR_DOMAIN + '?canceled=true',
