@@ -22,15 +22,12 @@ class StripeCheckoutView(APIView):
                 data=request.POST
             )
 
-            return Response({"errors":str("hello world")}, status = status.HTTP_200_OK)
-
-            """###
+            print(request.data)
 
             if serializer.is_valid():
-            
+
                 data = serializer.validated_data
 
-                print("data:", data)
 
                 checkout_session = stripe.checkout.Session.create(
                     line_items=[
@@ -50,15 +47,12 @@ class StripeCheckoutView(APIView):
                     cancel_url=YOUR_DOMAIN + '?canceled=true',
                 )
 
-                
+                #return Response({"message":str("hello world")}, status = status.HTTP_200_OK)
+                return redirect(checkout_session.url)
 
-                #return redirect(checkout_session.url)
-                return Response({"errors":str("hello world")}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
-                print(serializer.errors)
+                return Response({"errors":str(serializer.errors)}, status = status.HTTP_200_OK)
 
-                return Response({"errors":str(serializer.errors)}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
-            """
         except Exception as e:
             print("Exception:" + str(e))
             return Response({"errors":str(e)}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
