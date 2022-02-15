@@ -32,7 +32,6 @@ export const Item: React.FC<Props> = (props) => {
                         
                         
                         <div className="row">
-
                             <div className="col-sm">
                                 <b className="price">{String(props.price).slice(0, 7)} </b> sek
                             </div>

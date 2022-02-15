@@ -40,7 +40,6 @@ const ProductDisplay: React.FC<ProductDisplayProps> = () => {
         }).catch(err => {
             console.log(err)
         })
-
         
     }
 

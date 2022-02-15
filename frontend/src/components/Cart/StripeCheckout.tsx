@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from "react";
 import {API_URL} from "./../../config/index"
-import axios from 'axios';
 
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+import { useSelector, useDispatch } from 'react-redux'
+import { addToCart, removeFromCart } from '../../redux/cartSlice'
+import { RootState } from '../../redux/store'
+
+import styled from "styled-components"
 
 const ProductDisplay = () => (
   <section>
-    <div className="product">
-      <img
-        src="https://i.imgur.com/EHyR2nP.png"
-        alt="The cover of Stubborn Attachments"
-      />
-      <div className="description">
-      <h3>Stubborn Attachments</h3>
-      <h5>$20.00</h5>
-      </div>
-    </div>
-
-    {console.log(API_URL)}
     <form action={API_URL + "/payments/create-checkout-session"} method="POST">
+      <input type="hidden" id="productIDS" name="productIDS" value="1"/>
       <button type="submit">
         Checkout
       </button>
@@ -41,6 +32,10 @@ interface StipeCheckoutProps{}
 
 export const StripeCheckout: React.FC<StipeCheckoutProps> = () => {
   const [message, setMessage] = useState("");
+  const productID = useSelector((state: RootState) => state.Cart.productID)
+
+  
+
 
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -62,6 +57,85 @@ export const StripeCheckout: React.FC<StipeCheckoutProps> = () => {
   return message ? (
     <Message message={message} />
   ) : (
-    <ProductDisplay />
+
+    <Wrapper>
+      <div className="container">
+          <h2>List of Products</h2>
+
+          {console.log(productID)}                
+
+          <ul className="list-group">
+          {
+              productID.map((productID) => {
+                  {console.log(productID)}
+                  
+                  return (
+                      <li className="list-group-item d-flex justify-content-between align-items-center">
+                          The productID is: {productID}
+
+                          <span>
+                              <button type="button" className="btn-close" aria-label="Close"></button>
+                          </span>
+                      </li>
+                  )
+              })
+          }
+          </ul>
+
+          <div className="row">
+              <div className="col text-center">
+              <section>
+                <form action={API_URL + "/payments/create-checkout-session"} method="POST">
+                  
+                    {
+                    
+                      productID.map((productID) => {
+                        {console.log(productID)}
+                        
+                        return (
+                          <input type="hidden" id="productIDS" name="productIDS" value={productID}/>
+                        )
+                    })
+                  
+                  }
+
+                  <button type="submit" className="btn btn-primary btn-lg"> 
+                    Continue to checkout
+                  </button>
+                </form>
+              </section>
+              </div>
+          </div>
+
+      </div>
+    </Wrapper>
+
+
   );
 }
+
+
+
+const Wrapper = styled.div`
+
+.container{
+    margin-top: 100px;
+}
+
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+  }
+
+.btn{
+    margin-top: 50px;
+    width: 30%;
+}
+
+`
