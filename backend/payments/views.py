@@ -1,29 +1,64 @@
 from .models import *
-from django.http import JsonResponse
+from rest_framework import status
+from rest_framework.response import Response
+from django.shortcuts import redirect
 from django.conf import settings
-from django.views import View
+from rest_framework.views import APIView
+from .serializer import CheckoutSerializer
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class CreateCheckoutSession(View):
+
+class StripeCheckoutView(APIView):
 
     def post(self, request, *args, **kwargs):
-        YOUR_DOMAIN = "http://127.0.0.1:8000"
+        try:
+            
+            YOUR_DOMAIN = "http://127.0.0.1:3000"
 
-        checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    'price': '{{PRICE_ID}}',
-                    'quantity': 1,
-                },
-            ],
-            mode='payment',
-            success_url=YOUR_DOMAIN + '?success=true',
-            cancel_url=YOUR_DOMAIN + '?canceled=true',
-        )
+            serializer = CheckoutSerializer(
+                data=request.POST
+            )
 
-        return JsonResponse({
-            'id': checkout_session.id
-        })
+            return Response({"errors":str("hello world")}, status = status.HTTP_200_OK)
+
+            """###
+
+            if serializer.is_valid():
+            
+                data = serializer.validated_data
+
+                print("data:", data)
+
+                checkout_session = stripe.checkout.Session.create(
+                    line_items=[
+                        {
+                            "price_data": {
+                                "unit_amount": 4000,
+                                "currency": 'usd',
+                                "product_data": {
+                                    "name": "Test Product"
+                                },
+                            },
+                            'quantity': 1,
+                        }
+                    ],
+                    mode='payment',
+                    success_url=YOUR_DOMAIN + '?success=true&session_id={CHECKOUT_SESSION_ID}',
+                    cancel_url=YOUR_DOMAIN + '?canceled=true',
+                )
+
+                
+
+                #return redirect(checkout_session.url)
+                return Response({"errors":str("hello world")}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+            else:
+                print(serializer.errors)
+
+                return Response({"errors":str(serializer.errors)}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+            """
+        except Exception as e:
+            print("Exception:" + str(e))
+            return Response({"errors":str(e)}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
