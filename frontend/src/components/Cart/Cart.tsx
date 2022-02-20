@@ -33,10 +33,8 @@ const ProductDisplay: React.FC<ProductDisplayProps> = () => {
                 "Content-Type": "application/json",
             }
         }).then(res => {
-
             console.log("success")
             console.log(res.data)
-
         }).catch(err => {
             console.log(err)
         })
@@ -92,7 +90,6 @@ const Message: React.FC<MessageProps> = ({ message }) => (
 
 
 interface CartProps {
-    token:string|null
 }
 
 export const Cart: React.FC<CartProps> = () => {

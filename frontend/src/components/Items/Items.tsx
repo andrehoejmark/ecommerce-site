@@ -19,7 +19,7 @@ interface Props {
 export const Items: React.FC<Props> = (props) => {
 
     const [items, setItems] = useState<Array<itemVariables>>([])
-
+    
     useEffect(() => {
         axios({
             method: "GET",

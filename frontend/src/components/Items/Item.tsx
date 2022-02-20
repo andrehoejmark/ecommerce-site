@@ -99,4 +99,10 @@ const Wrapper = styled.div`
     margin-top:3px;
 }
 
+
+.Add-To-Cart{
+
+    cursor: pointer;
+}
+
 `

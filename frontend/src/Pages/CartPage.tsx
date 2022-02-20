@@ -6,10 +6,9 @@ import {StripeCheckout} from "./../components/Cart/StripeCheckout"
 import {NavBar} from "./../components/NavBar/NavBar"
 
 interface Props {
-  token:string|null
 }
 
-export const CartPage: React.FC<Props> = ({token}) => {
+export const CartPage: React.FC<Props> = () => {
 
   return (
     <Wrapper>

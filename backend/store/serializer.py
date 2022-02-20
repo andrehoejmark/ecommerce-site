@@ -17,3 +17,13 @@ class ProductSerializer(serializers.ModelSerializer):
             product_instance = Product.objects.create(name=product_name, price=price, desc=desc)
 
             return product_instance
+
+
+
+
+class GetProductSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = ['id', 'title', 'price', 'desc', 'image']
+

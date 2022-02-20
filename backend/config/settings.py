@@ -36,14 +36,8 @@ else:
     STRIPE_PUBLISHABLE_KEY = 'production_publishable_key'
     STRIPE_SECRET_KEY = 'production_secret_key'
 
-
 ALLOWED_HOSTS = ["*"]
-
-#ALLOWED_HOSTS = ['localhost:3000']
 CSRF_TRUSTED_ORIGINS = ['localhost:3000']
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -52,14 +46,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django_extensions',
     'corsheaders',
-    'rest_framework',
-    'storages',
 
     'store',
     'payments',
 ]
 
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -105,12 +100,8 @@ DATABASES = {
     }
 }
 
-#CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
-#CORS_ALLOW_ALL_ORIGINS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
-# Password validation
-# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -126,6 +117,18 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
 
 
 # Internationalization
@@ -150,3 +153,9 @@ STATIC_URL = '/static/'
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'ecommerce-site'
 STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+
+
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_HSTS_SECONDS = 3600
+SECURE_SSL_REDIRECT = False
