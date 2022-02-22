@@ -47,7 +47,7 @@ class GetProducts(APIView):
 
             data = serializer.data
 
-            return Response({"items":data})
+            return Response({"items": data})
         
         except Exception as e:
             return Response({"error": "internal error, + " + str(e)})

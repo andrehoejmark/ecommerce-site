@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from .serializer import CheckoutSerializer
 import stripe
 from store.models import *
+from rest_framework import authentication, permissions
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -14,6 +15,9 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class StripeCheckoutView(APIView):
+
+    authentication_classes = []
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
         try:

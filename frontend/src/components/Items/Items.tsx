@@ -5,6 +5,7 @@ import axios from "axios"
 import {Item} from "./Item"
 
 
+
 interface itemVariables {
     id: number,
     title: string,
@@ -16,24 +17,39 @@ interface itemVariables {
 interface Props {
 }
 
-export const Items: React.FC<Props> = (props) => {
+export const Items: React.FC<Props> = () => {
 
-    const [items, setItems] = useState<Array<itemVariables>>([])
+    const [items, setItems] = useState<Array<itemVariables>|null>(null)
     
-    useEffect(() => {
+    const getProducts = () =>{
         axios({
             method: "GET",
             url: "http://127.0.0.1:8000/store",
             params: {}
         }).then(res => {
-            {console.log(res.data)}
-            setItems(res.data)
+            {console.log(res.data.items)}
+            setItems(res.data.items)
+
+            console.log("items:", items)
         }).catch(e => {
+            // Dynamically show some message instead of the items
             console.log("Error fetching items: " + e)
         })
+    }
+
+    useEffect(() => {
+        getProducts()
     }, [])
 
-    return (
+
+    if (items == null){
+        return(
+            <span data-testid="loading">Loading data... <p>{items}</p></span>
+        )
+    }
+
+    else{
+        return (
             <Wrapper>
                 <div className="container">
 
@@ -44,8 +60,8 @@ export const Items: React.FC<Props> = (props) => {
                                 {console.log(item.id)}
                                 
                                 return (
-                                    <div className="col-sm">
-                                        <Item key={item.id}
+                                    <div  key={item.id} data-testid="resolved" className="col-sm">
+                                        <Item
                                             id={item.id}
                                             title={item.title}
                                             desc={item.desc}
@@ -59,6 +75,7 @@ export const Items: React.FC<Props> = (props) => {
                 </div>
             </Wrapper>
         );
+    }
 };
 
 

@@ -16,7 +16,6 @@ interface Props {
 
 export const Item: React.FC<Props> = (props) => {
 
-    const productID = useSelector((state: RootState) => state.Cart.productID)
     const dispatch = useDispatch()
     
     return (
