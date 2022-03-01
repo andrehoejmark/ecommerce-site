@@ -3,7 +3,6 @@ import styled from "styled-components"
 
 import { useSelector, useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from '../../redux/cartSlice'
-import { RootState } from '../../redux/store'
 
 
 interface Props {

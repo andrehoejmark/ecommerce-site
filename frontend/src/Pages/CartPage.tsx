@@ -10,13 +10,10 @@ interface Props {
 export const CartPage: React.FC<Props> = () => {
 
   return (
-    <Wrapper>
-      
-      <NavBar/>
-      <Cart/>
-
-
-    </Wrapper>
+      <Wrapper>
+        <NavBar/>
+        <Cart/>
+      </Wrapper>
     );
 };
 

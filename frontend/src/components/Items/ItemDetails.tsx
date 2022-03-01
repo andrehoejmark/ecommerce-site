@@ -1,3 +1,10 @@
+/*
+
+Unused component!
+- Future work to show more details when clicking on an item
+
+*/
+
 import React from "react";
 import styled from "styled-components"
 

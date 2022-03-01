@@ -26,10 +26,7 @@ export const Items: React.FC<Props> = () => {
             url: "http://127.0.0.1:8000/store",
             params: {}
         }).then(res => {
-            {console.log(res.data.items)}
             setItems(res.data.items)
-
-            console.log("items:", items)
         }).catch(e => {
             // Dynamically show some message instead of the items
             console.log("Error fetching items: " + e)
@@ -56,8 +53,6 @@ export const Items: React.FC<Props> = () => {
 
                         {
                             items.map((item) => {
-                                {console.log(item.id)}
-                                
                                 return (
                                     <div  key={item.id} data-testid="resolved" className="col-sm">
                                         <Item

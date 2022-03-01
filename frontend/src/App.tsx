@@ -3,10 +3,6 @@ import {HomePage} from "./Pages/HomePage"
 import {CartPage} from "./Pages/CartPage"
 
 
-import axios from "axios"
-import {useState, useEffect} from "react"
-
-
 function App() {
 
 

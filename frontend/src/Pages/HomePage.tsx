@@ -15,9 +15,6 @@ export const HomePage: React.FC<Props> = () => {
       <NavBar/>
       <Items/>
 
-
-      
-
     </Wrapper>
     );
 };

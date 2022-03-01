@@ -17,7 +17,6 @@ export const productIDSlice = createSlice({
       state.productID = state.productID.sort()
     },
     removeFromCart: (state, action) => {
-      console.log("Remove from Cart")
       for( var i = 0; i < state.productID.length; i++){ 
           if(action.payload == state.productID[i]){
             state.productID.splice(i, 1)

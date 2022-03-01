@@ -7,16 +7,6 @@ import { RootState } from '../../redux/store'
 
 import styled from "styled-components"
 
-const ProductDisplay = () => (
-  <section>
-    <form action={API_URL + "/payments/create-checkout-session"} method="POST">
-      <input type="hidden" id="productIDS" name="productIDS" value="1"/>
-      <button type="submit">
-        Checkout
-      </button>
-    </form>
-  </section>
-);
 
 interface MessageProps {
     message: string;
@@ -61,13 +51,10 @@ export const Cart: React.FC<StipeCheckoutProps> = () => {
     <Wrapper>
       <div className="container">
           <h2>List of Products</h2>
-
-          {console.log(productID)}             
-
+          
           <ul className="list-group">
           {
               productID.map((productID) => {
-                  {console.log(productID)}
                   
                   return (
                       <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -90,13 +77,11 @@ export const Cart: React.FC<StipeCheckoutProps> = () => {
                     {
                     
                       productID.map((productID) => {
-                        {console.log(productID)}
                         
                         return (
                           <input type="hidden" id="productIDS" name="productIDS" value={productID}/>
                         )
                     })
-                  
                   }
 
                   <button type="submit" className="btn btn-primary btn-lg"> 

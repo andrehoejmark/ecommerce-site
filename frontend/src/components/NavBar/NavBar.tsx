@@ -1,9 +1,8 @@
-import React, {useState, useEffect, useRef} from "react";
+import React from "react";
 import styled from "styled-components"
 import {Link} from "react-router-dom";
 
-import { useSelector, useDispatch } from 'react-redux'
-import { addToCart, removeFromCart } from '../../redux/cartSlice'
+import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 
 
@@ -15,17 +14,6 @@ export const NavBar: React.FC<Props> = () => {
     const productID = useSelector((state: RootState) => state.Cart.productID)
 
 
-    const notify = () =>{
-        console.log("cat")
-    }
-
-
-    useEffect(() => {
-        
-        notify()
-
-    },[productID])
-
   return (
         <Wrapper>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -34,22 +22,6 @@ export const NavBar: React.FC<Props> = () => {
                     <Link to="/">
                         <img className="myimage" src="candle3.png"/>
                     </Link>
-
-
-                    <div aria-live="polite" aria-atomic="true" className="bg-dark position-relative bd-example-toasts">
-                        <div className="toast-container position-absolute p-3" id="toastPlacement">
-                            <div className="toast">
-                                <div className="toast-header">
-                                    <img src="..." className="rounded me-2" alt="..."/>
-                                    <strong className="me-auto">Bootstrap</strong>
-                                    <small>11 mins ago</small>
-                                </div>
-                                <div className="toast-body">
-                                    Hello, world! This is a toast message.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     
                     
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
