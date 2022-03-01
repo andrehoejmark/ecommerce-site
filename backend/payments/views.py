@@ -69,7 +69,7 @@ class StripeCheckoutView(APIView):
                 return redirect(checkout_session.url)
 
             else:
-                return Response({"errors":str(serializer.errors)}, status = status.HTTP_200_OK)
+                return Response({"errors":str(serializer.errors)}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         except Exception as e:
             print("Exception:" + str(e))
