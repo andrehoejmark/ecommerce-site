@@ -33,9 +33,7 @@ class StripeCheckoutView(APIView):
 
                 data = serializer.validated_data
 
-
                 productIDS = data['productIDS']
-
 
                 line_items = []
                 for productID in productIDS:
@@ -69,7 +67,7 @@ class StripeCheckoutView(APIView):
                 return redirect(checkout_session.url)
 
             else:
-                return Response({"errors":str(serializer.errors)}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({"errors":str(serializer.errors)}, status = status.HTTP_400_BAD_REQUEST)
 
         except Exception as e:
             print("Exception:" + str(e))
