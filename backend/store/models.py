@@ -1,15 +1,6 @@
 from django.db import models
 
 # Create your models here.
-
-
-class Customer(models.Model):
-    name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
-
-
 class Product(models.Model):
     title = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True, default=None)
@@ -18,6 +9,20 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+
+
+
+
+
+# The models below are inspired by another person. It's not something I'm right now using because It's stored in Stripe but better to have it in our own system.
+class Customer(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
 
 class Order(models.Model):
     transaction_id = models.CharField(primary_key=True, max_length=200)

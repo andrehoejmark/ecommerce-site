@@ -43,7 +43,6 @@ class StripeCheckoutView(APIView):
                     product = Product.objects.get(pk=productID)
 
                     productName = product.title
-                    productImage = product.image
                     productPrice = int(str(int(product.price)) + "00")
 
                     line_item = {
