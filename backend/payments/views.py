@@ -28,14 +28,12 @@ class StripeCheckoutView(APIView):
                 data=request.POST
             )
 
-            print(request)
 
             if serializer.is_valid():
 
                 data = serializer.validated_data
 
 
-                print("data:")
                 productIDS = data['productIDS']
 
 
@@ -54,7 +52,6 @@ class StripeCheckoutView(APIView):
                                 "currency": 'sek',
                                 "product_data": {
                                     "name": productName,
-                                    "images": [str(productImage)]
                                 },
                             },
                             'quantity': 1,
