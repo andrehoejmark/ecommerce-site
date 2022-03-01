@@ -1,5 +1,7 @@
 node_modules/
 
+gcp-private-key.json
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -51,3 +53,6 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+
+

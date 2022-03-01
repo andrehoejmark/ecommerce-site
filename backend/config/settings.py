@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'corsheaders',
+    'rest_framework_swagger',
 
     'store',
     'payments',
@@ -161,3 +162,4 @@ STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_HSTS_SECONDS = 3600
 SECURE_SSL_REDIRECT = False
+
