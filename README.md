@@ -10,6 +10,28 @@
   <li>Payment integration with Stripe</li>
 </ul> <br /><br />
 
+**How To Start**
+<br />
+Backend<br />
+ <ul>
+  <li>Install python3.7.9</li>
+  <li>Open a terminal/console in ~/Ecommerce-site/backend/</li>
+  <li>Type "pip install -r requirements.txt" to install the modules required</li>
+  <li>Type "python manage.py runserver"</li>
+  <li>Now the backend is running. Keep in mind you won't be able to access cloud storage without the Google Cloud Platform private key which I can't upload to a public Git repo</li>
+</ul> <br /><br />
+
+Frontend
+ <ul>
+  <li>Open a terminal/console in ~/Ecommerce-site/frontend/</li>
+  <li>Type "npm start"</li>
+  <li>Now the frontend is running</li>
+</ul> <br /><br />
+
+Extra<br />
+By default 127.0.0.1:3000 will have the react frontend and 127.0.0.1:8000 will have the django backend
+</ul> <br /><br />
+
 
 [REPORT](https://github.com/andrehoejmark/ecommerce-site/blob/main/Project%20Report.pdf) <br />
 [FRONTEND](https://github.com/andrehoejmark/ecommerce-site/tree/main/frontend)<br />
